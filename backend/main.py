@@ -1,20 +1,25 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
+
+from db.connection import create_connection
 from services.feedbacks import Feedbacks
 from services.stats import Stats
 from services.customers import Customer
 from services.franchise import Franchise
 from services.categories import Category
-from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
 
-# Instanciando serviços
-feedback_service = Feedbacks()
-stats_service = Stats()
-customer_service = Customer()
-franchise_service = Franchise()
-category_service = Category()
+# Criar uma conexão única e compartilhada
+conn = create_connection()
+
+# Instanciando serviços com a mesma conexão
+feedback_service = Feedbacks(conn)
+stats_service = Stats(conn)
+customer_service = Customer(conn)
+franchise_service = Franchise(conn)
+category_service = Category(conn)
 
 
 @app.route("/", methods=["GET"])
@@ -30,23 +35,44 @@ def create_feedback():
     notes = data.get("notes")
     customer_name = data.get("customer_name")
     franchise_name = data.get("franchise_unit")
+    is_update = data.get("update", False)
 
-    if not message or not category_name or not customer_name or not franchise_name:
+    # IDs
+    customer_id = (
+        customer_service.get_or_create(customer_name) if customer_name else None
+    )
+    franchise_id = (
+        franchise_service.get_or_create(franchise_name) if franchise_name else None
+    )
+    category_id = (
+        category_service.get_or_create(category_name) if category_name else None
+    )
+
+    # Último feedback do cliente
+    last_feedback = (
+        feedback_service.get_last_feedback_by_customer(customer_id)
+        if customer_id
+        else None
+    )
+
+    if is_update and last_feedback:
+        feedback_service.update(
+            feedback_id=last_feedback["id"],
+            customer_id=customer_id,
+            franchise_id=franchise_id,
+            category_id=category_id,
+            notes=notes,
+        )
+        return jsonify({"id": last_feedback["id"], "status": "updated"}), 200
+
+    if not message or not category_name:
         return (
             jsonify(
-                {
-                    "error": "message_text, category, customer_name and franchise_unit are required"
-                }
+                {"error": "message_text and category are required for new feedback"}
             ),
             400,
         )
 
-    # Transformando nomes em IDs
-    customer_id = customer_service.get_or_create(customer_name)
-    franchise_id = franchise_service.get_or_create(franchise_name)
-    category_id = category_service.get_or_create(category_name)
-
-    # Inserindo feedback
     insert_id = feedback_service.insert(
         customer_id=customer_id,
         franchise_id=franchise_id,
@@ -55,12 +81,11 @@ def create_feedback():
         notes=notes,
     )
 
-    return jsonify({"id": insert_id, "status": "ok"}), 201
+    return jsonify({"id": insert_id, "status": "created"}), 201
 
 
 @app.route("/feedbacks", methods=["GET"])
 def list_feedbacks():
-    # Recebendo possíveis filtros via query params
     franchise_name = request.args.get("franchise_unit")
     category_name = request.args.get("category")
 
