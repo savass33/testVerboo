@@ -1,64 +1,87 @@
 from flask import Flask, request, jsonify
-from services.get_feedbacks import get_feedbacks
-from services.insert_feedback import insert_feedback
-from services.stats import get_stats
+from services.feedbacks import Feedbacks
+from services.stats import Stats
+from services.customers import Customer
+from services.franchise import Franchise
+from services.categories import Category
+from flask_cors import CORS
 
-app = Flask(__name__)  # Initialize Flask
+app = Flask(__name__)
+CORS(app)
+
+# Instanciando serviços
+feedback_service = Feedbacks()
+stats_service = Stats()
+customer_service = Customer()
+franchise_service = Franchise()
+category_service = Category()
 
 
-@app.route(
-    "/",
-    methods=["GET"],
-)
+@app.route("/", methods=["GET"])
 def home():
     return "Home"
 
 
-@app.route(
-    "/feedbacks",
-    methods=[
-        "POST"
-    ],  # POST is used when it's necessary to send data to server for create something
-)
+@app.route("/feedbacks", methods=["POST"])
 def create_feedback():
-    data = request.get_json()  # Receive data from JSON
-
-    # Split the JSON info
+    data = request.get_json()
     message = data.get("message_text")
-    category = data.get("category")
+    category_name = data.get("category")
     notes = data.get("notes")
     customer_name = data.get("customer_name")
-    franchise_unit = data.get("franchise_unit")
+    franchise_name = data.get("franchise_unit")
 
-    if not message or not category:
+    if not message or not category_name or not customer_name or not franchise_name:
         return (
-            jsonify({"error": "message_text and/or category is necessary"}),
+            jsonify(
+                {
+                    "error": "message_text, category, customer_name and franchise_unit are required"
+                }
+            ),
             400,
-        )  # 400 -> bad request
+        )
 
-    insert_id = insert_feedback(customer_name, message, notes, category, franchise_unit)
+    # Transformando nomes em IDs
+    customer_id = customer_service.get_or_create(customer_name)
+    franchise_id = franchise_service.get_or_create(franchise_name)
+    category_id = category_service.get_or_create(category_name)
+
+    # Inserindo feedback
+    insert_id = feedback_service.insert(
+        customer_id=customer_id,
+        franchise_id=franchise_id,
+        category_id=category_id,
+        message_text=message,
+        notes=notes,
+    )
+
     return jsonify({"id": insert_id, "status": "ok"}), 201
 
 
-@app.route(
-    "/feedbacks",
-    methods=["GET"],  # GET is used when it's necessary to receive data from server
-)
+@app.route("/feedbacks", methods=["GET"])
 def list_feedbacks():
-    category = request.args.get("category")
-    franchise_unit = request.args.get("franchise_unit")
+    # Recebendo possíveis filtros via query params
+    franchise_name = request.args.get("franchise_unit")
+    category_name = request.args.get("category")
 
-    feedbacks = get_feedbacks(category, franchise_unit)
+    franchise_id = (
+        franchise_service.get_or_create(franchise_name) if franchise_name else None
+    )
+    category_id = (
+        category_service.get_or_create(category_name) if category_name else None
+    )
 
-    return jsonify(feedbacks), 200  # 200 -> Ok
+    feedbacks = feedback_service.get_feedbacks(
+        franchise_id=franchise_id, category_id=category_id
+    )
+    return jsonify(feedbacks), 200
 
 
 @app.route("/stats", methods=["GET"])
 def stats():
-    statistics = get_stats()
+    statistics = stats_service.get_stats()
     return jsonify(statistics), 200
 
 
-# Run server
 if __name__ == "__main__":
     app.run()
