@@ -1,25 +1,24 @@
 from db.connection import create_connection
 
-
 class Category:
     VALID_KINDS = ("complaint", "compliment")
-
-    def __init__(self, conn):
-        self.conn = conn  # shared connection
 
     def get_or_create(self, kind):
         if kind not in self.VALID_KINDS:
             return None
 
-        cursor = self.conn.cursor()
-        try:
-            cursor.execute("SELECT id FROM category WHERE kind=%s", (kind,))
-            row = cursor.fetchone()
-            if row:
-                return row[0]
-
-            cursor.execute("INSERT INTO category (kind) VALUES (%s)", (kind,))
-            self.conn.commit()
-            return cursor.lastrowid
-        finally:
+        conn = create_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT id FROM category WHERE kind=%s", (kind,))
+        row = cursor.fetchone()
+        if row: 
             cursor.close()
+            conn.close()
+            return row[0]
+
+        cursor.execute("INSERT INTO category (kind) VALUES (%s)", (kind,))
+        conn.commit()
+        last_id = cursor.lastrowid
+        cursor.close()
+        conn.close()
+        return last_id

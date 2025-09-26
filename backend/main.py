@@ -11,15 +11,12 @@ from services.categories import Category
 app = Flask(__name__)
 CORS(app)
 
-# create only one connection
-conn = create_connection()
-
 # creating services
-feedback_service = Feedbacks(conn)
-stats_service = Stats(conn)
-customer_service = Customer(conn)
-franchise_service = Franchise(conn)
-category_service = Category(conn)
+feedback_service = Feedbacks()
+stats_service = Stats()
+customer_service = Customer()
+franchise_service = Franchise()
+category_service = Category()
 
 # home route (debug use only)
 @app.route("/", methods=["GET"])
