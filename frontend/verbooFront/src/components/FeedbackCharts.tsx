@@ -30,50 +30,56 @@ export default function FeedbackCharts({
   );
 
   const pieData = [
-    { name: "Elogios", value: stats.compliment },
-    { name: "Reclamações", value: stats.complaint },
+    { name: "Elogios", value: Number(stats.compliment) },
+    { name: "Reclamações", value: Number(stats.complaint) },
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div className="bg-white shadow rounded-lg p-6">
-        <h3 className="text-lg font-semibold mb-4">
-          Distribuição por Franquia
-        </h3>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={franchiseData}>
-            <XAxis dataKey="name" />
-            <YAxis />
-            <RechartsTooltip />
-            <Bar dataKey="count" fill="#8884d8" />
-          </BarChart>
-        </ResponsiveContainer>
+    <>
+      <div className="flex justify-center mb-4">
+        <div className="bg-white shadow rounded-lg p-4 w-full max-w-md">
+          <h3 className="text-lg font-semibold mb-2 text-center">
+            Distribuição por Franquia
+          </h3>
+          <ResponsiveContainer width="100%" height={200}>
+            <BarChart data={franchiseData}>
+              <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+              <YAxis tick={{ fontSize: 12 }} />
+              <RechartsTooltip />
+              <Bar dataKey="count" fill="#8884d8" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       </div>
 
-      <div className="bg-white shadow rounded-lg p-6">
-        <h3 className="text-lg font-semibold mb-4">Elogios vs Reclamações</h3>
-        <ResponsiveContainer width="100%" height={300}>
-          <PieChart>
-            <Pie
-              data={pieData}
-              dataKey="value"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              outerRadius={80}
-              label
-            >
-              {pieData.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={PIE_COLORS[index % PIE_COLORS.length]}
-                />
-              ))}
-            </Pie>
-            <RechartsTooltip />
-          </PieChart>
-        </ResponsiveContainer>
+      <div className="flex justify-center">
+        <div className="bg-white shadow rounded-lg p-4 w-full max-w-md">
+          <h3 className="text-lg font-semibold mb-2 text-center">
+            Elogios vs Reclamações
+          </h3>
+          <ResponsiveContainer width="100%" height={200}>
+            <PieChart>
+              <Pie
+                data={pieData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={60}
+                label
+              >
+                {pieData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={PIE_COLORS[index % PIE_COLORS.length]}
+                  />
+                ))}
+              </Pie>
+              <RechartsTooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

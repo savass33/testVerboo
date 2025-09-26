@@ -4,8 +4,8 @@ import "./App.css";
 
 function App() {
   return (
-    <div className="bg-gray-100 min-h-screen p-6">
-      <header className="mb-8">
+    <div className="bg-gray-100 min-h-screen p-4">
+      <header className="mt-8">
         <h1 className="text-4xl font-bold text-gray-800">
           Sistema de Feedbacks
         </h1>

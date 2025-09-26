@@ -13,6 +13,11 @@ export default function FeedbackList() {
     date: "",
   });
 
+  const categoryMap: Record<string, string> = {
+    compliment: "Elogio",
+    complaint: "Reclamação",
+  };
+
   useEffect(() => {
     getFeedbacks()
       .then((res) => setFeedbacks(res.data))
@@ -32,7 +37,9 @@ export default function FeedbackList() {
           .includes(filters.franchise.toLowerCase())
       : true;
     const matchesCategory = filters.category
-      ? fb.category === filters.category
+      ? categoryMap[fb.category]
+          .toLowerCase()
+          .includes(filters.category.toLowerCase())
       : true;
     const matchesCustomer = filters.customer
       ? fb.customer_name.toLowerCase().includes(filters.customer.toLowerCase())
