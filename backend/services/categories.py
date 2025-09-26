@@ -5,7 +5,7 @@ class Category:
     VALID_KINDS = ("complaint", "compliment")
 
     def __init__(self, conn):
-        self.conn = conn  # Conexão compartilhada
+        self.conn = conn  # shared connection
 
     def get_or_create(self, kind):
         if kind not in self.VALID_KINDS:

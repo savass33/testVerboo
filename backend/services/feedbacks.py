@@ -45,7 +45,7 @@ class Feedbacks:
             params.append(notes)
 
         if not fields:
-            return False  # nada a atualizar
+            return False  # nothing to update
 
         sql = f"UPDATE feedbacks SET {', '.join(fields)} WHERE id = %s"
         params.append(feedback_id)

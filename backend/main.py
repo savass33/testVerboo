@@ -11,22 +11,22 @@ from services.categories import Category
 app = Flask(__name__)
 CORS(app)
 
-# Criar uma conexão única e compartilhada
+# create only one connection
 conn = create_connection()
 
-# Instanciando serviços com a mesma conexão
+# creating services
 feedback_service = Feedbacks(conn)
 stats_service = Stats(conn)
 customer_service = Customer(conn)
 franchise_service = Franchise(conn)
 category_service = Category(conn)
 
-
+# home route (debug use only)
 @app.route("/", methods=["GET"])
 def home():
     return "Home"
 
-
+# feedback route
 @app.route("/feedbacks", methods=["POST"])
 def create_feedback():
     data = request.get_json()
@@ -48,7 +48,7 @@ def create_feedback():
         category_service.get_or_create(category_name) if category_name else None
     )
 
-    # Último feedback do cliente
+    # last customer feedback
     last_feedback = (
         feedback_service.get_last_feedback_by_customer(customer_id)
         if customer_id
