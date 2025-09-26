@@ -1,14 +1,21 @@
 import axios from "axios";
 
 export type Stats = {
+  compliment: number;
+  complaint: number;
   total: number;
   elogios: number;
   reclamacoes: number;
 };
 
 export type Feedback = {
-  elogio?: string;
-  reclamacao?: string;
+  id?: number;
+  category: string;
+  customer_name: string;
+  franchise_unit: string;
+  dish?: string;
+  notes: string;
+  timestamp?: string;
 };
 
 const api = axios.create({

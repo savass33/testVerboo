@@ -5,6 +5,9 @@ type StatsCardsProps = {
 };
 
 export default function StatsCards({ stats }: StatsCardsProps) {
+  const complimentsPerc = (stats.compliment / stats.total) * 100;
+  const complaintPerc = (stats.complaint / stats.total) * 100;
+
   return (
     <div className="grid grid-cols-3 gap-4">
       <div className="bg-white shadow p-4 rounded">
@@ -13,11 +16,11 @@ export default function StatsCards({ stats }: StatsCardsProps) {
       </div>
       <div className="bg-green-50 shadow p-4 rounded">
         <h2 className="text-lg font-semibold">Elogios</h2>
-        <p className="text-2xl text-green-600">{stats.elogios}%</p>
+        <p className="text-2xl text-green-600">{complimentsPerc.toFixed(2)}%</p>
       </div>
       <div className="bg-red-50 shadow p-4 rounded">
         <h2 className="text-lg font-semibold">Reclamações</h2>
-        <p className="text-2xl text-red-600">{stats.reclamacoes}%</p>
+        <p className="text-2xl text-red-600">{complaintPerc.toFixed(2)}%</p>
       </div>
     </div>
   );

@@ -5,15 +5,19 @@ import StatsCards from "./StatsCards"; // componente que mostra KPIs
 export default function Dashboard() {
   type Stats = {
     total: number;
-    elogios: number;
-    reclamacoes: number;
+    compliment: number;
+    complaint: number;
   };
 
   const [stats, setStats] = useState<Stats | null>(null);
 
   useEffect(() => {
     getStats()
-      .then((res) => setStats(res.data))
+      .then((res) => {
+        console.log("Status:")
+        console.log(res.data)
+        setStats(res.data);
+      })
       .catch((e) => console.error(e));
   }, []);
 
