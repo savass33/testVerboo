@@ -21,7 +21,7 @@ export type Feedback = {
 const api = axios.create({
   baseURL: "https://unexpired-axially-vickey.ngrok-free.dev",
   headers: {
-    "ngrok-skip-browser-warning": "true", // qualquer valor funciona
+    "ngrok-skip-browser-warning": "true", // any value works
   },
 });
 

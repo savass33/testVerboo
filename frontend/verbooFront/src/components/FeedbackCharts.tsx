@@ -13,7 +13,7 @@ import {
 
 type FeedbackChartsProps = { feedbacks: Feedback[]; stats: Stats };
 
-const PIE_COLORS = ["#4ade80", "#f87171"]; // verde = elogio, vermelho = reclamação
+const PIE_COLORS = ["#4ade80", "#f87171"]; // green for compliment / red for complaint
 
 export default function FeedbackCharts({
   feedbacks,

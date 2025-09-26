@@ -33,16 +33,13 @@ export default function Dashboard() {
 
   return (
     <div className="bg-white shadow-md rounded-xl p-6 mb-10 max-w-6xl mx-auto">
-      {/* Toggle Resumo/Detalhado */}
       <DashboardToggle
         detailedView={detailedView}
         setDetailedView={setDetailedView}
       />
 
-      {/* Cards de KPIs */}
       <StatsCards stats={stats} />
 
-      {/* Gráficos detalhados */}
       {detailedView && feedbacks.length > 0 && (
         <div className="flex flex-col md:flex-row md:justify-center gap-6 mt-8">
           <FeedbackCharts stats={stats} feedbacks={feedbacks} />
