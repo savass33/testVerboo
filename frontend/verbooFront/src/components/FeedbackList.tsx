@@ -50,6 +50,7 @@ export default function FeedbackList() {
     const matchesDate = filters.date
       ? dayjs(fb.timestamp).format("YYYY-MM-DD") === filters.date
       : true;
+
     return (
       matchesFranchise &&
       matchesCategory &&
@@ -63,46 +64,44 @@ export default function FeedbackList() {
     <div>
       {/* Filtros */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 mb-6">
-        <input
-          type="text"
-          placeholder="Franquia"
-          className="border rounded px-3 py-2"
-          value={filters.franchise}
-          onChange={(e) =>
-            setFilters({ ...filters, franchise: e.target.value })
-          }
-        />
-        <input
-          type="text"
-          placeholder="Categoria"
-          className="border rounded px-3 py-2"
-          value={filters.category}
-          onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="Cliente"
-          className="border rounded px-3 py-2"
-          value={filters.customer}
-          onChange={(e) => setFilters({ ...filters, customer: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="Palavra-chave"
-          className="border rounded px-3 py-2"
-          value={filters.keyword}
-          onChange={(e) => setFilters({ ...filters, keyword: e.target.value })}
-        />
+        {["Franquia", "Categoria", "Cliente", "Palavra-chave"].map(
+          (label, idx) => (
+            <input
+              key={label}
+              type="text"
+              placeholder={label}
+              className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              value={
+                idx === 0
+                  ? filters.franchise
+                  : idx === 1
+                  ? filters.category
+                  : idx === 2
+                  ? filters.customer
+                  : filters.keyword
+              }
+              onChange={(e) =>
+                setFilters({
+                  ...filters,
+                  franchise: idx === 0 ? e.target.value : filters.franchise,
+                  category: idx === 1 ? e.target.value : filters.category,
+                  customer: idx === 2 ? e.target.value : filters.customer,
+                  keyword: idx === 3 ? e.target.value : filters.keyword,
+                })
+              }
+            />
+          )
+        )}
         <input
           type="date"
-          className="border rounded px-3 py-2"
+          className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
           value={filters.date}
           onChange={(e) => setFilters({ ...filters, date: e.target.value })}
         />
       </div>
 
       {filtered.length === 0 ? (
-        <p className="text-gray-600">Nenhum feedback encontrado</p>
+        <p className="text-gray-500 text-center">Nenhum feedback encontrado</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((fb) => {
@@ -112,21 +111,18 @@ export default function FeedbackList() {
             return (
               <div
                 key={fb.id}
-                className={`p-4 rounded-lg shadow-lg border-l-4 transition hover:scale-105 ${
+                className={`p-4 rounded-xl shadow hover:shadow-lg transition transform hover:scale-105 border-l-4 ${
                   isComplaint
                     ? "bg-red-50 border-red-600"
                     : "bg-green-50 border-green-600"
                 }`}
               >
-                {/* Header: cliente + franquia */}
                 <div className="flex justify-between items-start mb-2">
                   <div>
                     <p className="font-semibold text-gray-800">
                       {fb.customer_name}
                     </p>
-                    <p className="text-sm text-gray-500">
-                      {fb.franchise_unit} {/*cidade/estado opcional*/}
-                    </p>
+                    <p className="text-sm text-gray-500">{fb.franchise_unit}</p>
                   </div>
                   <span
                     className={`px-2 py-1 rounded-full text-xs font-semibold ${
@@ -135,16 +131,14 @@ export default function FeedbackList() {
                         : "bg-green-600 text-white"
                     }`}
                   >
-                    {isComplaint ? "Reclamação" : "Elogio"}
+                    {categoryMap[fb.category]}
                   </span>
                 </div>
 
-                {/* Prato ou serviço */}
                 {fb.dish && (
                   <p className="text-sm font-medium mb-2">🍽 {fb.dish}</p>
                 )}
 
-                {/* Notas resumidas/expandíveis */}
                 <p
                   className="text-gray-700 cursor-pointer"
                   onClick={() => toggleExpanded(fb.id!)}
@@ -157,8 +151,7 @@ export default function FeedbackList() {
                   )}
                 </p>
 
-                {/* Timestamp */}
-                <p className="mt-2 text-xs text-gray-500">
+                <p className="mt-2 text-xs text-gray-400">
                   {dayjs(fb.timestamp).format("DD/MM/YYYY HH:mm")}
                 </p>
               </div>

@@ -18,30 +18,33 @@ export default function Dashboard() {
     getStats()
       .then((res) => setStats(res.data))
       .catch(console.error);
+
     getFeedbacks()
       .then((res) => setFeedbacks(res.data))
       .catch(console.error);
   }, []);
 
   if (!stats)
-    return <p className="p-4 text-gray-700">Carregando estatísticas...</p>;
+    return (
+      <p className="p-6 text-gray-500 text-center">
+        Carregando estatísticas...
+      </p>
+    );
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 mb-6">
+    <div className="bg-white shadow-md rounded-xl p-6 mb-10 max-w-6xl mx-auto">
       {/* Toggle Resumo/Detalhado */}
-      <div className="flex justify-end mb-4">
-        <DashboardToggle
-          detailedView={detailedView}
-          setDetailedView={setDetailedView}
-        />
-      </div>
+      <DashboardToggle
+        detailedView={detailedView}
+        setDetailedView={setDetailedView}
+      />
 
       {/* Cards de KPIs */}
       <StatsCards stats={stats} />
 
       {/* Gráficos detalhados */}
       {detailedView && feedbacks.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div className="flex flex-col md:flex-row md:justify-center gap-6 mt-8">
           <FeedbackCharts stats={stats} feedbacks={feedbacks} />
         </div>
       )}

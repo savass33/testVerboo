@@ -13,7 +13,7 @@ import {
 
 type FeedbackChartsProps = { feedbacks: Feedback[]; stats: Stats };
 
-const PIE_COLORS = ["#00C49F", "#FF4D4F"]; // verde = elogio, vermelho = reclamação
+const PIE_COLORS = ["#4ade80", "#f87171"]; // verde = elogio, vermelho = reclamação
 
 export default function FeedbackCharts({
   feedbacks,
@@ -36,28 +36,28 @@ export default function FeedbackCharts({
 
   return (
     <>
-      <div className="flex justify-center mb-4">
-        <div className="bg-white shadow rounded-lg p-4 w-full max-w-md">
-          <h3 className="text-lg font-semibold mb-2 text-center">
+      <div className="flex justify-center mb-6">
+        <div className="bg-white shadow-md rounded-xl p-4 w-full max-w-md">
+          <h3 className="text-lg font-semibold mb-2 text-center text-gray-700">
             Distribuição por Franquia
           </h3>
-          <ResponsiveContainer width="100%" height={200}>
+          <ResponsiveContainer width="100%" height={220}>
             <BarChart data={franchiseData}>
               <XAxis dataKey="name" tick={{ fontSize: 12 }} />
               <YAxis tick={{ fontSize: 12 }} />
               <RechartsTooltip />
-              <Bar dataKey="count" fill="#8884d8" />
+              <Bar dataKey="count" fill="#60a5fa" radius={[6, 6, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
       </div>
 
       <div className="flex justify-center">
-        <div className="bg-white shadow rounded-lg p-4 w-full max-w-md">
-          <h3 className="text-lg font-semibold mb-2 text-center">
+        <div className="bg-white shadow-md rounded-xl p-4 w-full max-w-md">
+          <h3 className="text-lg font-semibold mb-2 text-center text-gray-700">
             Elogios vs Reclamações
           </h3>
-          <ResponsiveContainer width="100%" height={200}>
+          <ResponsiveContainer width="100%" height={220}>
             <PieChart>
               <Pie
                 data={pieData}
@@ -65,7 +65,7 @@ export default function FeedbackCharts({
                 nameKey="name"
                 cx="50%"
                 cy="50%"
-                outerRadius={60}
+                outerRadius={70}
                 label
               >
                 {pieData.map((entry, index) => (
