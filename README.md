@@ -88,7 +88,8 @@ Isso irá:
 ngrok http 5000
 ```
 
-Copie a URL HTTPS fornecida pelo ngrok e configure na plataforma Verboo.
+Copie a URL HTTPS fornecida pelo ngrok e configure na plataforma Verboo, se necessário.
+Observação: ao construir o container, caso o backend não funcione, considere acessar sua IDE, localizar o arquivo entrypoint.sh (está dentro de backend) e alterar os padrões de quebra de linha ajustando para `LF` e em seguida rode novamente no seu terminal `docker-compose --build`
 
 ### 5. Rodar frontend
 
