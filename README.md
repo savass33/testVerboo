@@ -63,7 +63,7 @@ testeVerboo/
    ```powershell
    .\venv\Scripts\activate
    ```
-4. Instalar as dependências do Python:
+4. Instalar as dependências do Python (antes, saia da pasta backend com `cd ..`: 
 
    ```powershell
    pip install -r requirements.txt
