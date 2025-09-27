@@ -19,10 +19,7 @@ export type Feedback = {
 };
 
 const api = axios.create({
-  baseURL: "https://unexpired-axially-vickey.ngrok-free.dev",
-  headers: {
-    "ngrok-skip-browser-warning": "true", // any value works
-  },
+  baseURL: "http://localhost:5000",
 });
 
 export const getStats = () => api.get<Stats>("/stats");
