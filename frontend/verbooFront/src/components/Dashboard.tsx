@@ -20,14 +20,14 @@ export default function Dashboard() {
       .catch(console.error);
 
     getFeedbacks()
-      .then((res) => setFeedbacks(res.data))
+      .then(setFeedbacks)
       .catch(console.error);
   }, []);
 
   if (!stats)
     return (
       <p className="p-6 text-gray-500 text-center">
-        Carregando estatísticas...
+        Nenhuma estatística encontrada
       </p>
     );
 

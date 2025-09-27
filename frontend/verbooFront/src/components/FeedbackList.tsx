@@ -20,7 +20,7 @@ export default function FeedbackList() {
 
   useEffect(() => {
     getFeedbacks()
-      .then((res) => setFeedbacks(res.data))
+      .then(setFeedbacks)
       .catch(console.error);
   }, []);
 
