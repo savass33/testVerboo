@@ -75,45 +75,21 @@ testeVerboo/
    ```
 6. Configurar variáveis de ambiente:
 
-   * Copie `.env.example` para `.env`
-   * Preencha os valores: senha do MySQL, host, usuário e VERBOO_API_KEY.
+   * Copie `.env.example` para um novo arquivo chamado `.env`
+   * Preencha os valores: senha do MySQL, host e usuário.
 
-### Como Rodar
-
-* Clique duas vezes em `start_backend.bat` ou rode no terminal:
-
-```powershell
-cd backend
-start_backend.bat
-```
-
-* Isso abrirá duas janelas: uma rodando o Flask e outra rodando o ngrok.
-
----
 
 ## Frontend
 
 ### Instalação Inicial
 
-1. Abrir terminal na pasta `frontend\verbooFront`.
+1. Abrir terminal na pasta `frontend\Front`.
 2. Instalar dependências do Node:
 
 ```powershell
 npm install
 ```
 
-### Como Rodar
-
-* Clique duas vezes em `start_frontend.bat` ou rode no terminal:
-
-```powershell
-cd frontend\verbooFront
-start_frontend.bat
-```
-
-* Uma janela de terminal será aberta mostrando o endereço do Vite (`http://localhost:5173`) que pode ser aberto no navegador.
-
-> **Observação:** Se preferir, é possível usar o link externo do Verboo para abrir a IA sem rodar o frontend local.
 
 ---
 
@@ -132,7 +108,7 @@ timeout /t 2
 start cmd /k "ngrok http 5000"
 
 REM Frontend
-cd /d %~dp0\frontend\verbooFront
+cd /d %~dp0\frontend\Front
 start cmd /k "npm run dev"
 
 pause
@@ -144,9 +120,9 @@ pause
 
 ## Observações
 
-* **Banco de dados:** MySQL local. Crie um usuário com acesso ao banco `verboodb`.
+* **Banco de dados:** MySQL local. Crie um usuário com acesso ao banco `db`.
 * **Dependências:** Python (Flask, mysql-connector-python, flask-cors, python-dotenv) e Node.js (Vite/React).
-* **Link da IA Verboo:** `https://rita.verbeux.com.br/generative/c30be119-2c91-427d-beff-32cad93ccdbd`
+* **Link da IA :** `https://rita.verbeux.com.br/generative/c30be119-2c91-427d-beff-32cad93ccdbd`
 
 ---
 
