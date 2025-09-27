@@ -4,7 +4,7 @@
 
 Projeto de teste técnico para integração com a plataforma Verboo. Permite o envio de feedbacks de clientes, gerenciamento de franquias, categorias e estatísticas.
 
-O projeto possui **backend** em Flask com banco de dados MySQL e **frontend** em Vite/React. Todo o processo de execução foi simplificado para que o avaliador consiga rodar o sistema facilmente.
+O projeto possui **backend** em Flask com banco de dados MySQL e **frontend** em Vite/React. O setup foi configurao para execução via **Docker** e ngrok, facilitando o processo de rodar o sistema em qualquer máquina.
 
 ---
 
@@ -21,12 +21,11 @@ testeVerboo/
 │   │   ├── customers.py
 │   │   ├── franchise.py
 │   │   └── category.py
-│   ├── venv/
 │   ├── main.py
 │   ├── init_db.py
-│   ├── .env.example
+│   ├── Dockerfile
 │   ├── requirements.txt
-│   └── start_backend.bat
+│   └── .env.example
 │
 ├── frontend/
 │   └── verbooFront/
@@ -39,92 +38,82 @@ testeVerboo/
 
 ## Ferramentas Necessárias
 
-* **Python 3.10+**
-* **pip** (gerenciador de pacotes Python)
+* **Docker** e **Docker Compose**
 * **Node.js 18+** e **npm**
-* **MySQL 8+** ou MariaDB
-* **ngrok** (opcional, para expor o backend publicamente)
+* **ngrok** (para expor o backend publicamente)
 * **Editor de código** (VS Code recomendado)
-
+* **Python 3.10+**
+* **pip** (gerenciador de pacotes Python)**
+* **Node.js 18+** e **npm**
+* **MySQL 8+** ou MariaDB**
+* **Editor de código** (VS Code recomendado)
 ---
 
-## Backend
 
-### Instalação Inicial
+## Passo a Passo de Execução
 
-1. Abrir o terminal na pasta `backend`.
-2. Criar o virtual environment:
+### 1. Clonar o projeto
 
-   ```powershell
-   python -m venv venv
-   ```
-3. Ativar o virtual environment:
+```bash
+git clone https://github.com/savass33/testeVerboo.git
+cd testeVerboo
+```
 
-   ```powershell
-   .\venv\Scripts\activate
-   ```
-4. Instalar as dependências do Python: 
+### 2. Criar arquivo `.env`
 
-   ```powershell
-   pip install -r requirements.txt
-   ```
-5. Configurar arquivo `connection.py`:
+No backend, copie o exemplo e configure se necessário:
 
-   * Preencha o valor da sua senha do MySQL
-   * Por padrão os valores de host, user e database já estão definidos
-   
-6. Criar o banco de dados MySQL (`verboodb`) e tabelas:
+```bash
+cd backend
+cp .env.example .env
+```
 
-   ```powershell
-   python init_db.py
-   ```
+### 3. Construir e subir containers Docker
 
+Na raiz do projeto:
 
+```bash
+docker-compose up --build
+```
 
-## Frontend
+Isso irá:
 
-### Instalação Inicial
+* Construir a imagem do backend com Python 3.11
+* Rodar o MySQL
+* Inicializar o banco e criar tabelas automaticamente
+* Subir o backend na porta 5000
 
-1. Abrir terminal na pasta `frontend\verbooFront`.
-2. Instalar dependências do Node:
+### 4. Rodar ngrok para expor o backend
 
-```powershell
+```bash
+ngrok http 5000
+```
+
+Copie a URL HTTPS fornecida pelo ngrok e configure na plataforma Verboo.
+
+### 5. Rodar frontend
+
+```bash
+cd frontend/verbooFront
 npm install
+npm run dev
 ```
 
+O frontend será iniciado em `http://localhost:5173` (ou porta que o Vite indicar).
 
----
+### 6. Acessar e testar
 
-## Executando Tudo em Um Clique
-
-Existe um `.bat` unificado para rodar **backend + ngrok + frontend**:
-
-```bat
-@echo off
-
-REM Backend
-cd /d %~dp0\backend
-call venv\Scripts\activate.bat
-start cmd /k "venv\Scripts\python.exe main.py"
-timeout /t 2
-start cmd /k "ngrok http 5000"
-
-REM Frontend
-cd /d %~dp0\frontend\Front
-start cmd /k "npm run dev"
-
-pause
-```
-
-* Basta clicar nele para abrir todas as janelas necessárias.
+* Frontend: `http://localhost:5173`
+* Backend: `http://localhost:5000`
+* URL pública via ngrok: usar na Verboo para envio de feedbacks
 
 ---
 
 ## Observações
 
-* **Banco de dados:** MySQL local. Crie um usuário com acesso ao banco `db`.
+* **Banco de dados:** MySQL interno do container. O script `init_db.py` já inicializa as tabelas.
 * **Dependências:** Python (Flask, mysql-connector-python, flask-cors, python-dotenv) e Node.js (Vite/React).
-* **Link da IA :** `https://rita.verbeux.com.br/generative/c30be119-2c91-427d-beff-32cad93ccdbd`
+* **Link da IA:** `https://rita.verbeux.com.br/generative/c30be119-2c91-427d-beff-32cad93ccdbd`
 
 ---
 
