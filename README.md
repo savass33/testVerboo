@@ -68,22 +68,24 @@ testeVerboo/
    ```powershell
    pip install -r requirements.txt
    ```
-5. Criar o banco de dados MySQL (`verboodb`) e tabelas:
+5. Configurar arquivo `connection.py`:
+
+   * Preencha o valor da sua senha do MySQL
+   * Por padrão os valores de host, user e database já estão definidos
+   
+6. Criar o banco de dados MySQL (`verboodb`) e tabelas:
 
    ```powershell
    python init_db.py
    ```
-6. Configurar variáveis de ambiente:
 
-   * Copie `.env.example` para um novo arquivo chamado `.env`
-   * Preencha os valores: senha do MySQL, host e usuário.
 
 
 ## Frontend
 
 ### Instalação Inicial
 
-1. Abrir terminal na pasta `frontend\Front`.
+1. Abrir terminal na pasta `frontend\verbooFront`.
 2. Instalar dependências do Node:
 
 ```powershell
