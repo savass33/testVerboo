@@ -27,7 +27,7 @@ export default function Dashboard() {
   if (!stats)
     return (
       <p className="p-6 text-gray-500 text-center">
-        Carregando estatísticas...
+        Nenhuma estatística encontrada
       </p>
     );
 
