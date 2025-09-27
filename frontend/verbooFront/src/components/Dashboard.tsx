@@ -20,7 +20,7 @@ export default function Dashboard() {
       .catch(console.error);
 
     getFeedbacks()
-      .then((res) => setFeedbacks(res.data))
+      .then(setFeedbacks)
       .catch(console.error);
   }, []);
 

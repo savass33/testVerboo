@@ -23,6 +23,10 @@ const api = axios.create({
 });
 
 export const getStats = () => api.get<Stats>("/stats");
-export const getFeedbacks = () => api.get<Feedback[]>("/feedbacks");
+export const getFeedbacks = async (): Promise<Feedback[]> => {
+  const response = await api.get<Feedback[]>("/feedbacks");
+  return response.data; // isso garante que você receba um array
+};
+
 export const insertFeedbacks = (data: Feedback) =>
   api.post<Feedback>("/feedbacks", data);

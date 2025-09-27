@@ -1,3 +1,4 @@
+import os
 import mysql.connector
 from mysql.connector import Error
 
@@ -5,7 +6,10 @@ from mysql.connector import Error
 def create_connection():
     try:
         conn = mysql.connector.connect(
-            host="localhost", user="root", password="YOUR_PASSWORD_HERE", database="verboodb"
+            host=os.getenv("DB_HOST", "db"),
+            user="root",
+            password=os.getenv("MYSQL_ROOT_PASSWORD"),
+            database=os.getenv("DB_NAME"),
         )
         if conn.is_connected():
             print("Sucess to connect db")
