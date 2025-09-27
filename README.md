@@ -75,6 +75,8 @@ Na raiz do projeto:
 docker-compose up --build
 ```
 
+*Observação:* ao construir o container, caso o backend não funcione, considere acessar sua IDE, localizar o arquivo entrypoint.sh (está dentro de backend) e alterar os padrões de quebra de linha ajustando para `LF` e em seguida rode novamente no seu terminal `docker-compose --build`
+
 Isso irá:
 
 * Construir a imagem do backend com Python 3.11
@@ -89,8 +91,6 @@ ngrok http 5000
 ```
 
 Copie a URL HTTPS fornecida pelo ngrok e configure na plataforma Verboo, se necessário.
-
-*Observação:* ao construir o container, caso o backend não funcione, considere acessar sua IDE, localizar o arquivo entrypoint.sh (está dentro de backend) e alterar os padrões de quebra de linha ajustando para `LF` e em seguida rode novamente no seu terminal `docker-compose --build`
 
 ### 5. Rodar frontend
 
@@ -150,3 +150,4 @@ O frontend será iniciado em `http://localhost:5173` (ou porta que o Vite indica
 * `message_text` TEXT
 * `notes` TEXT
 * `timestamp` DATETIME DEFAULT CURRENT_TIMESTAMP
+
