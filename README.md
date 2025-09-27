@@ -69,13 +69,15 @@ cp .env.example .env
 
 ### 3. Construir e subir containers Docker
 
+*Observação:* Antes de construir o container, localize o arquivo `backend/entrypoint.sh` e verifique qual o padrão de quebra de linha ativo: ajuste para `LF`. Essa configuração pode ser alterada a depender da IDE utilizada, no VSCode ela esta posicionada no canto inferior direito. Altere de `CRLF` para `LF`, caso necessário.
+
 Na raiz do projeto:
 
 ```bash
 docker-compose up --build
 ```
 
-*Observação:* ao construir o container, caso o backend não funcione, considere acessar sua IDE, localizar o arquivo entrypoint.sh (está dentro de backend) e alterar os padrões de quebra de linha ajustando para `LF` e em seguida rode novamente no seu terminal `docker-compose --build`
+
 
 Isso irá:
 
@@ -150,4 +152,5 @@ O frontend será iniciado em `http://localhost:5173` (ou porta que o Vite indica
 * `message_text` TEXT
 * `notes` TEXT
 * `timestamp` DATETIME DEFAULT CURRENT_TIMESTAMP
+
 
