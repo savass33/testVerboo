@@ -45,7 +45,7 @@ testeVerboo/
 * **Python 3.10+**
 * **pip** (gerenciador de pacotes Python)**
 * **Node.js 18+** e **npm**
-* **MySQL 8+** ou MariaDB**
+* **MySQL 8+**
 * **Editor de código** (VS Code recomendado)
 ---
 
@@ -55,16 +55,15 @@ testeVerboo/
 ### 1. Clonar o projeto
 
 ```bash
-git clone https://github.com/savass33/testeVerboo.git
-cd testeVerboo
+git clone https://github.com/savass33/testVerboo.git
+cd testVerboo
 ```
 
 ### 2. Criar arquivo `.env`
 
-No backend, copie o exemplo e configure se necessário:
+Na raiz do projeto, copie o exemplo e configure se necessário:
 
 ```bash
-cd backend
 cp .env.example .env
 ```
 
