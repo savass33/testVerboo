@@ -1,30 +1,50 @@
 import { useEffect, useState } from "react";
-import { getStats } from "../services/api"; // função que chamará a API Flask
-import StatsCards from "./StatsCards"; // componente que mostra KPIs
+import {
+  getStats,
+  getFeedbacks,
+  type Stats,
+  type Feedback,
+} from "../services/api";
+import StatsCards from "./StatsCards";
+import FeedbackCharts from "./FeedbackCharts";
+import DashboardToggle from "./DashboardToggle";
 
 export default function Dashboard() {
-  type Stats = {
-    total: number;
-    elogios: number;
-    reclamacoes: number;
-  };
-
   const [stats, setStats] = useState<Stats | null>(null);
+  const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
+  const [detailedView, setDetailedView] = useState(true);
 
   useEffect(() => {
     getStats()
       .then((res) => setStats(res.data))
-      .catch((e) => console.error(e));
+      .catch(console.error);
+
+    getFeedbacks()
+      .then((res) => setFeedbacks(res.data))
+      .catch(console.error);
   }, []);
 
-  if (!stats) {
-    return <p className="p-4">Carregando estatísticas...</p>;
-  }
+  if (!stats)
+    return (
+      <p className="p-6 text-gray-500 text-center">
+        Carregando estatísticas...
+      </p>
+    );
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Painel de visão</h1>
-      <StatsCards stats={stats}>{/* Adicao de graficos e listas */}</StatsCards>
+    <div className="bg-white shadow-md rounded-xl p-6 mb-10 max-w-6xl mx-auto">
+      <DashboardToggle
+        detailedView={detailedView}
+        setDetailedView={setDetailedView}
+      />
+
+      <StatsCards stats={stats} />
+
+      {detailedView && feedbacks.length > 0 && (
+        <div className="flex flex-col md:flex-row md:justify-center gap-6 mt-8">
+          <FeedbackCharts stats={stats} feedbacks={feedbacks} />
+        </div>
+      )}
     </div>
   );
 }

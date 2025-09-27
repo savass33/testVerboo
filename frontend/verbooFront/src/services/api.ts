@@ -1,21 +1,25 @@
 import axios from "axios";
 
 export type Stats = {
+  compliment: number;
+  complaint: number;
   total: number;
   elogios: number;
   reclamacoes: number;
 };
 
 export type Feedback = {
-  elogio?: string;
-  reclamacao?: string;
+  id?: number;
+  category: string;
+  customer_name: string;
+  franchise_unit: string;
+  dish?: string;
+  notes: string;
+  timestamp?: string;
 };
 
 const api = axios.create({
-  baseURL: "https://unexpired-axially-vickey.ngrok-free.dev",
-  headers: {
-    "ngrok-skip-browser-warning": "true", // qualquer valor funciona
-  },
+  baseURL: "http://localhost:5000",
 });
 
 export const getStats = () => api.get<Stats>("/stats");
