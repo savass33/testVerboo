@@ -8,7 +8,7 @@ class Category:
             return None
 
         conn = create_connection()
-        cursor = conn.cursor()
+        cursor = conn.cursor(buffered=True)  # add buffered=True
         cursor.execute("SELECT id FROM category WHERE kind=%s", (kind,))
         row = cursor.fetchone()
         if row: 

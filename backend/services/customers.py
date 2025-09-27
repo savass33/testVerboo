@@ -5,7 +5,7 @@ class Customer:
         if not name: return None
 
         conn = create_connection()
-        cursor = conn.cursor()
+        cursor = conn.cursor(buffered=True)  # add buffered=True
         cursor.execute("SELECT id FROM customers WHERE name=%s", (name,))
         row = cursor.fetchone()
         if row:
