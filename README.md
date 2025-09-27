@@ -4,7 +4,7 @@
 
 Projeto de teste técnico para integração com a plataforma Verboo. Permite o envio de feedbacks de clientes, gerenciamento de franquias, categorias e estatísticas.
 
-O projeto possui **backend** em Flask com banco de dados MySQL e **frontend** em Vite/React. O processo de execução foi simplificado para que seja possível rodar todo o sistema com dois cliques.
+O projeto possui **backend** em Flask com banco de dados MySQL e **frontend** em Vite/React. Todo o processo de execução foi simplificado para que o avaliador consiga rodar o sistema facilmente.
 
 ---
 
@@ -25,6 +25,7 @@ testeVerboo/
 │   ├── main.py
 │   ├── init_db.py
 │   ├── .env.example
+│   ├── requirements.txt
 │   └── start_backend.bat
 │
 ├── frontend/
@@ -36,68 +37,89 @@ testeVerboo/
 
 ---
 
-## Instalação Inicial
+## Ferramentas Necessárias
 
-### Backend
+* **Python 3.10+**
+* **pip** (gerenciador de pacotes Python)
+* **Node.js 18+** e **npm**
+* **MySQL 8+** ou MariaDB
+* **ngrok** (opcional, para expor o backend publicamente)
+* **Editor de código** (VS Code recomendado)
+
+---
+
+## Backend
+
+### Instalação Inicial
 
 1. Abrir o terminal na pasta `backend`.
-2. Criar e ativar o virtual environment (se ainda não existir):
+2. Criar o virtual environment:
 
    ```powershell
    python -m venv venv
+   ```
+3. Ativar o virtual environment:
+
+   ```powershell
    .\venv\Scripts\activate
    ```
-3. Instalar dependências:
+4. Instalar as dependências do Python:
 
    ```powershell
    pip install -r requirements.txt
    ```
-4. Criar banco de dados MySQL e tabelas:
+5. Criar o banco de dados MySQL (`verboodb`) e tabelas:
 
    ```powershell
    python init_db.py
    ```
-5. Configurar variáveis de ambiente:
+6. Configurar variáveis de ambiente:
 
-   * Copie `.env.example` para `.env`.
-   * Preencha sua senha do MySQL e outras variáveis necessárias.
+   * Copie `.env.example` para `.env`
+   * Preencha os valores: senha do MySQL, host, usuário e VERBOO_API_KEY.
 
-### Frontend
+### Como Rodar
 
-1. Abrir o terminal na pasta `frontend\verbooFront`.
-2. Instalar dependências:
-
-   ```powershell
-   npm install
-   ```
-
----
-
-## Como Rodar
-
-### Opção 1: Separado
-
-**Backend + ngrok**
+* Clique duas vezes em `start_backend.bat` ou rode no terminal:
 
 ```powershell
 cd backend
 start_backend.bat
 ```
 
-Isso abrirá duas janelas: uma rodando Flask e outra o ngrok.
+* Isso abrirá duas janelas: uma rodando o Flask e outra rodando o ngrok.
 
-**Frontend**
+---
+
+## Frontend
+
+### Instalação Inicial
+
+1. Abrir terminal na pasta `frontend\verbooFront`.
+2. Instalar dependências do Node:
+
+```powershell
+npm install
+```
+
+### Como Rodar
+
+* Clique duas vezes em `start_frontend.bat` ou rode no terminal:
 
 ```powershell
 cd frontend\verbooFront
 start_frontend.bat
 ```
 
-Isso abrirá uma janela rodando o Vite.
+* Uma janela de terminal será aberta mostrando o endereço do Vite (`http://localhost:5173`) que pode ser aberto no navegador.
 
-### Opção 2: Tudo em um clique
+> **Observação:** Se preferir, é possível usar o link externo do Verboo para abrir a IA sem rodar o frontend local.
 
-Você pode criar um `.bat` unificado que roda **backend + ngrok + frontend**:
+---
+
+## Executando Tudo em Um Clique
+
+Existe um `.bat` unificado para rodar **backend + ngrok + frontend**:
 
 ```bat
 @echo off
@@ -116,7 +138,7 @@ start cmd /k "npm run dev"
 pause
 ```
 
-Basta clicar nesse arquivo e todo o projeto será iniciado.
+* Basta clicar nele para abrir todas as janelas necessárias.
 
 ---
 
@@ -124,8 +146,7 @@ Basta clicar nesse arquivo e todo o projeto será iniciado.
 
 * **Banco de dados:** MySQL local. Crie um usuário com acesso ao banco `verboodb`.
 * **Dependências:** Python (Flask, mysql-connector-python, flask-cors, python-dotenv) e Node.js (Vite/React).
-* **Chave API Verboo:** Armazenar no `.env` como `VERBOO_API_KEY`.
-* **Frontend opcional:** Se preferir, pode usar o link externo da plataforma Verboo em vez de rodar localmente.
+* **Link da IA Verboo:** `https://rita.verbeux.com.br/generative/c30be119-2c91-427d-beff-32cad93ccdbd`
 
 ---
 
