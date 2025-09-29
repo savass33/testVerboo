@@ -16,6 +16,9 @@ IA](https://rita.verbeux.com.br/generative/c30be119-2c91-427d-beff-32cad93ccdbd)
 
 FoodAssistent, ID: 950
 
+⚡ **Vídeo do projeto:** 👉(https://youtu.be/hKly4t43Q0c)
+
+
 ------------------------------------------------------------------------
 
 ## Estrutura do Projeto
@@ -197,6 +200,7 @@ indicar).
 -   `message_text` TEXT
 -   `notes` TEXT
 -   `timestamp` DATETIME DEFAULT CURRENT_TIMESTAMP
+
 
 
 
