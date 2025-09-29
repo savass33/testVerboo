@@ -102,10 +102,15 @@ cp .env.example .env
 
 ### 3. Construir e subir containers Docker
 
-⚠️ **Atenção:** antes de construir o container, ajuste o arquivo
-`backend/entrypoint.sh` para utilizar **LF** como quebra de linha.\
+⚠️ **Atenção:** antes de rodar essa próxima linha de código se atente a 3 coisas:
+
+1. Ajuste o arquivo `backend/entrypoint.sh` para utilizar **LF** como quebra de linha.\
 No VS Code, isso é configurado no canto inferior direito (alterar de
 `CRLF` para `LF`).
+
+2. Cerfitique que suas configurações no .env foram atualizada de acordo com suas informações do MySQL
+
+3. Que o Docker esteja rodando corretamente e já esteja aberto
 
 Na raiz do projeto:
 
@@ -187,3 +192,4 @@ indicar).
 -   `message_text` TEXT
 -   `notes` TEXT
 -   `timestamp` DATETIME DEFAULT CURRENT_TIMESTAMP
+
