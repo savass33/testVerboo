@@ -5,7 +5,7 @@ from mysql.connector import Error
 
 DB_HOST = os.getenv("DB_HOST", "db")
 DB_USER = os.getenv("DB_USER", "root")
-DB_PASSWORD = os.getenv("DB_PASSWORD", "")
+DB_PASSWORD = os.getenv("MYSQL_ROOT_PASSWORD", "")
 DB_NAME = os.getenv("DB_NAME", "verboodb")
 
 while True:
