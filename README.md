@@ -14,6 +14,8 @@ execução.
 ⚡ **Link da IA (essencial para integração):** 👉 [Acessar
 IA](https://rita.verbeux.com.br/generative/c30be119-2c91-427d-beff-32cad93ccdbd)
 
+FoodAssistent, ID: 950
+
 ------------------------------------------------------------------------
 
 ## Estrutura do Projeto
@@ -192,4 +194,5 @@ indicar).
 -   `message_text` TEXT
 -   `notes` TEXT
 -   `timestamp` DATETIME DEFAULT CURRENT_TIMESTAMP
+
 
