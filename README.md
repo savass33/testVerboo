@@ -104,13 +104,13 @@ cp .env.example .env
 
 ### 3. Construir e subir containers Docker
 
-⚠️ **Atenção:** antes de rodar essa próxima linha de código se atente a 3 coisas:
+⚠️ **Atenção:** antes de rodar essa próxima linha de código se atente a 3 pontos:
 
 1. Ajuste o arquivo `backend/entrypoint.sh` para utilizar **LF** como quebra de linha.\
 No VS Code, isso é configurado no canto inferior direito (alterar de
 `CRLF` para `LF`).
 
-2. Cerfitique que suas configurações no .env foram atualizada de acordo com suas informações do MySQL
+2. Cerfitique que suas configurações no .env foram atualizadas de acordo com suas informações do MySQL
 
 3. Que o Docker esteja rodando corretamente e já esteja aberto
 
@@ -120,9 +120,12 @@ Na raiz do projeto:
 docker-compose up --build
 ```
 
-Isso irá: \* Construir a imagem do backend com Python 3.11 \* Rodar o
-MySQL \* Inicializar o banco e criar tabelas automaticamente \* Subir o
-backend na porta 5000
+Isso irá:
+* Inicializar o banco e criar tabelas automaticamente
+* Rodar o MySQL
+*  Subir o backend na porta 5000
+*  Construir a imagem do backend com Python 3.11
+
 
 ### 4. Rodar ngrok para se conectar com o Assistente Verboo
 
@@ -194,5 +197,6 @@ indicar).
 -   `message_text` TEXT
 -   `notes` TEXT
 -   `timestamp` DATETIME DEFAULT CURRENT_TIMESTAMP
+
 
 
